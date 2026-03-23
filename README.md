@@ -21,6 +21,7 @@
 - [Parametric Triggers](#-parametric-triggers)
 - [AI/ML Integration Plan](#-aiml-integration-plan)
 - [Fraud Detection & Anti-Spoofing](#-fraud-detection--anti-spoofing)
+- [Business Viability](#-business-viability)
 - [Tech Stack](#-tech-stack)
 - [System Architecture](#-system-architecture)
 - [Development Plan](#-development-plan)
@@ -47,13 +48,15 @@ But this income isn't stable. Base pay per order has fallen from ₹40–₹45 t
 | Annual income lost per worker | ₹12,600–₹28,800 |
 | Total sector loss annually | ~₹900 Cr+ |
 
+**The disruption calendar never stops.** Chennai and Mumbai average 45+ heavy rain days per year. Delhi logs 30–40 zero-visibility fog mornings every winter. Every metro crosses AQI 300 at some point. None of this is covered by any existing product.
+
 No insurance product in India today is built for this. Existing products require paperwork, claim forms, and waiting periods — completely inaccessible to someone earning ₹800/day on a ₹10,000 Android phone. **SecureSync AI is built from the ground up for them.**
 
 ---
 
 ## 💡 Our Solution
 
-SecureSync AI is a **zero-touch parametric income insurance platform**. The core idea is simple: instead of asking a worker to prove they lost income, we use objective third-party data to detect the disruption — and then we pay automatically.
+SecureSync AI is a **zero-touch parametric income insurance platform**. Instead of asking a worker to prove they lost income, we use objective third-party data to detect the disruption — and then we pay automatically.
 
 The worker's only job is to buy a weekly policy. After that, our backend handles everything. When heavy rain crosses the IMD threshold in their zone, when AQI spikes past the CPCB danger level, when a bandh shuts down their city — our system detects it, validates it against 2 independent data sources, runs a fraud check, and transfers the money to their UPI. All within 2 minutes. No form. No call. No proof.
 
@@ -75,70 +78,84 @@ Works 10 hours/day, 6 days/week. Earns roughly ₹102/hr, ₹6,000/week. His pho
 
 > *Tuesday 3 PM. IMD Orange Alert issued. Rainfall in Rajan's zone crosses 70 mm for the day.*
 
-Rajan parks under a flyover and waits. 4 hours. He misses his ₹400 daily incentive slab — earnings drop from ₹900 to under ₹400. He has no way to recover this.
+Rajan parks under a flyover and waits 4 hours. He misses his ₹400 daily incentive slab — earnings drop from ₹900 to under ₹400. He has no way to recover this.
 
 With SecureSync AI running in the background:
-- At 3:12 PM, our Trigger Monitor reads ≥ 64.5 mm/day accumulation for Zone 4
+- At 3:12 PM, our Trigger Monitor reads ≥ 64.5 mm/day for Zone 4
 - OpenWeatherMap and IMD RSS both confirm — two independent sources agree
 - A `disruption_event` is created. Rajan's active policy is matched automatically
-- ₹102 × 4 hrs = **₹408** is initiated via Razorpay
-- His phone (still in his pocket) receives: *"₹408 credited to your UPI. Stay safe, Rajan."*
+- ₹102 × 4 hrs = **₹408** initiated via Razorpay
+- His phone receives: *"₹408 credited to your UPI. Stay safe, Rajan."*
 - He did nothing. He knew nothing. The money was just there.
 
 ---
 
 **Scenario 2 — Heat Wave, Hyderabad (May–June)**
 
-Max temperature crosses 40°C — the IMD definition of a heat wave on plains. Confirmed by OpenWeatherMap + IMD alert. Delivery platforms visibly throttle order assignments. Rajan's Hyderabad equivalent receives **₹408** (₹102 × 4 hrs) automatically, for the hours he couldn't safely work outdoors.
+Max temperature crosses 40°C — the IMD definition of a heat wave on plains. Confirmed by OpenWeatherMap + IMD alert. Delivery platforms throttle order assignments. Rajan's Hyderabad equivalent receives **₹408** (₹102 × 4 hrs) automatically.
 
 ---
 
 **Scenario 3 — Severe AQI, Delhi (October–November)**
 
-AQI crosses 300 in the CPCB "Very Poor" band. GRAP Stage II restrictions are active. AQICN and the CPCB official feed both confirm. Workers in affected Delhi zones receive **₹510** (₹102 × 5 hrs) — no different process, no extra steps.
+AQI crosses 300 — CPCB "Very Poor" band. GRAP Stage II active. AQICN and CPCB feed both confirm. Workers receive **₹510** (₹102 × 5 hrs). No different process, no extra steps.
 
 ---
 
-**Scenario 4 — Bandh / Curfew (Any City)**
+**Scenario 4 — Dense Fog, Delhi / North India (December–January)**
 
-An unannounced local bandh locks down pickup and drop zones. Our system cross-references 2 of 3 sources — a news API, a government portal, and geo-social signals. Full-day payout: **₹816** (₹102 × 8 hrs) reaches policyholders before noon.
+> *6 AM, Delhi. Visibility has dropped to 40 metres. A two-wheeler can't safely leave the driveway.*
+
+This is a disruption type most platforms ignore entirely — but Delhi and the Indo-Gangetic plains log 30–40 zero-visibility mornings every December and January. OpenWeatherMap's visibility field reads < 200m. Our Trigger Monitor catches it, confirms with the IMD fog advisory feed, and fires a 4-hour payout: **₹408** — before the worker would have even started his shift. This single trigger opens the entire North India winter market, a massive segment no competitor covers.
 
 ---
 
-**Scenario 5 — Platform Outage (Any City)**
+**Scenario 5 — Severe Traffic Gridlock (Any Metro)**
 
-HTTP health probes from 3 independent regions all fail to reach Swiggy/Zomato servers for more than 2 hours. This is a genuine income disruption — workers can't accept orders. Payout triggers per confirmed outage hour: **₹102/hr**, capped to declared weekly income.
+An accident or major event blocks arterial roads through a delivery zone during peak hours. Workers can't reach pickup points. TomTom Traffic API reports average zone speed below 8 km/hr for 60+ minutes. Our system cross-validates the drop in delivery activity and fires a **proportional payout** — calculated on the actual hours lost, not a flat estimate. Workers are compensated for the share of income they genuinely lost.
+
+---
+
+**Scenario 6 — Bandh / Curfew (Any City)**
+
+An unannounced bandh locks down pickup and drop zones. System cross-references 2 of 3 sources — NewsAPI, state government portal, and geo-social signals. Full-day payout: **₹816** (₹102 × 8 hrs) reaches policyholders before noon.
+
+---
+
+**Scenario 7 — Platform Outage (Any City)**
+
+HTTP probes from 3 independent regions all fail to reach Swiggy/Zomato servers for > 2 continuous hours. Workers can't accept orders. Payout fires per confirmed outage hour: **₹102/hr**, capped to declared weekly income.
 
 ---
 
 ## 📲 Built for Low-End Android
 
-Most delivery partners use entry-level Android devices — Redmi A series, Realme C series, Samsung A03/A04 — with 2–3 GB RAM, MediaTek processors, 32 GB storage, and Jio 4G that weakens during heavy rain. **If SecureSync AI doesn't work smoothly on a ₹8,000 phone with a patchy signal, it doesn't work.**
+Most delivery partners use entry-level devices — Redmi A series, Realme C series, Samsung A03/A04 — with 2–3 GB RAM, MediaTek processors, 32 GB storage, and Jio 4G that weakens in heavy rain. **If SecureSync AI doesn't work smoothly on a ₹8,000 phone with a patchy signal, it doesn't work.**
 
 This isn't an afterthought. It's a design constraint we imposed from day one.
 
-### What This Means for the App
+### What This Means
 
 **Bundle size target: < 150 KB initial JS load**
-We chose React 18 + Vite 5 over heavier frameworks specifically because Vite's tree-shaking and code-splitting produces significantly smaller bundles. No full UI kit libraries — we write lean custom components.
+React 18 + Vite 5 produces the leanest possible bundles via tree-shaking and code-splitting. No full UI kit imports — every component is handwritten.
+
+**Adaptive GPS sampling**
+Stationary or offline: checked every 30 minutes. Active and moving: every 2 minutes. This keeps GPS battery consumption **under 3% per day** — versus the 8–12% typical of continuous-tracking apps. Workers running Swiggy simultaneously on the same device won't notice SecureSync's battery footprint.
+
+**Data budget: < 40 MB/month**
+A full app session — open, check dashboard, close — costs under 50 KB of data. Payout notifications go via WhatsApp (already open, works on 2G, zero extra cost) rather than push notifications that require background app persistence on low-RAM devices. Total monthly data stays under 40 MB.
 
 **Offline-first architecture**
-The policy status screen, payout history, and trigger explanation screens are all cached via Service Worker on first load. If a worker loses signal during a storm (exactly when they'd check the app), they still see their active coverage details. Only the live weather widget requires a network call.
-
-**Image strategy**
-All assets are WebP with explicit width/height to prevent layout shift. No full-resolution photos anywhere in the worker app. Icons are inline SVGs — no icon font load.
-
-**Data usage**
-A full app session — open, check dashboard, close — costs under 50 KB of data. Payout notifications go via WhatsApp (which workers already have open) rather than push notifications, which require background app persistence on low-RAM devices.
+Policy status, payout history, and trigger explanation screens are cached via Service Worker on first load. If a worker loses signal during a storm — exactly when they'd check the app — they still see their active coverage. Only the live weather widget needs a network call.
 
 **No animations on the critical path**
-Policy purchase, payout confirmation, and the disruption alert screens are static layouts. Animations only appear on non-critical screens (splash, onboarding) where a slow render has no consequence.
+Policy purchase, payout confirmation, and the disruption alert screens are static layouts. Animations only appear on splash and onboarding — where a slow render has no consequence.
 
 **Network resilience**
-All API calls have a 3-second timeout with graceful fallback text. The trigger monitor backend uses cached zone data if an external API is slow — the app never shows a blank state or infinite spinner.
+All API calls carry a 3-second timeout with graceful fallback text. The trigger monitor serves cached zone data if an external API is slow. The app never shows a blank screen or an infinite spinner.
 
 **Typography**
-Noto Sans is used throughout — it renders Tamil, Telugu, Hindi, and Devanagari natively without a separate font load. A single font family covers our entire target user base.
+Noto Sans renders Tamil, Telugu, Hindi, and Devanagari from a single font file — our entire user base covered without an additional load.
 
 ---
 
@@ -150,13 +167,13 @@ Onboard → eKYC → Risk Profile → Weekly Policy → Automated Monitoring →
 
 | Step | What Happens |
 |------|-------------|
-| **1. Onboard** | Phone OTP login. Aadhaar eKYC sandbox. Employment verification screenshot. Under 3 minutes total. |
-| **2. Risk Profile** | ML ensemble (XGBoost + LightGBM) scores the worker's zone, forecast, and history. Premium returned in < 200ms. |
-| **3. Buy Policy** | Worker reviews 7-day coverage summary, confirms premium, pays via Razorpay UPI AutoPay. Policy activates immediately. |
-| **4. Monitor** | Trigger Monitor polls 5 external data sources every 5 minutes. Worker does nothing. |
-| **5. Trigger** | Threshold crossed + 2 independent sources confirm → `disruption_event` created → all matching policyholders identified. |
-| **6. Fraud check** | Isolation Forest scores each potential claim in < 5 seconds. Genuine claims pass instantly. |
-| **7. Payout** | `Avg Hourly Income × Disruption Hours` transferred via Razorpay UPI. WhatsApp notification sent. |
+| **1. Onboard** | Phone OTP login. Aadhaar eKYC sandbox. Employment verification screenshot. Under 3 minutes. |
+| **2. Risk Profile** | XGBoost + LightGBM ensemble scores zone, forecast, and history. Premium returned in < 200ms. Worker sees a plain-language SHAP breakdown of why they pay what they pay. |
+| **3. Buy Policy** | Worker reviews 7-day coverage summary, pays via Razorpay UPI AutoPay. Policy activates immediately. |
+| **4. Monitor** | Trigger Monitor polls 6 external data sources every 5 minutes. Worker does nothing. |
+| **5. Trigger** | Threshold crossed + 2 independent sources confirm → `disruption_event` → policyholders identified. |
+| **6. Fraud check** | Multi-layer engine including delivery activity cross-validation. Genuine claims pass in < 5 seconds. |
+| **7. Payout** | `Avg Hourly Income × Disruption Hours` transferred via Razorpay. WhatsApp notification sent. |
 
 ---
 
@@ -164,21 +181,19 @@ Onboard → eKYC → Risk Profile → Weekly Policy → Automated Monitoring →
 
 **Decision: Mobile-first Progressive Web App (PWA)**
 
-We considered building a native Android app first. We chose PWA for three reasons that matter specifically for this user:
+**Distribution.** Partners share useful tools via WhatsApp links. A PWA installs to the home screen in one tap — no Play Store account, no app size concerns, no update prompts that confuse non-tech-savvy users.
 
-**Distribution.** Delivery partners share useful tools as WhatsApp links. A PWA URL can be forwarded and "installed" to the home screen in one tap — no Play Store account, no app size concerns, no auto-update prompts that confuse non-tech-savvy users.
+**Performance.** On a Redmi A2 with 2 GB RAM, a PWA consumes 60–70% less memory than a native app — a real difference when Swiggy is running simultaneously.
 
-**Performance on constrained hardware.** PWAs run in the browser's optimised V8 runtime. On a Redmi A2 with 2 GB RAM, a PWA consumes roughly 60–70% less memory than an equivalent native app, which makes a meaningful difference when Swiggy is also running in the background.
+**Velocity.** Bug fixes and new trigger types ship the moment a worker opens the app. No release cycle. No version fragmentation. Critical in a 6-week competition.
 
-**Maintenance velocity.** Any bug fix or new trigger type ships to every user the moment they open the app — no release cycle, no version fragmentation. In a 6-week competition this matters enormously.
-
-Screen dimensions: 390×844px (standard Android viewport). Touch targets: minimum 48×48px throughout. Bottom navigation fixed — no hamburger menus.
+Screen: 390×844px. Touch targets: 48×48px minimum. Fixed bottom navigation — no hamburger menus.
 
 ---
 
 ## 💰 Weekly Premium Model
 
-Gig workers earn week-to-week, not month-to-month. Our premium cycle matches this exactly — collected each Monday via Razorpay UPI AutoPay, covering the 7 days ahead.
+Gig workers earn week-to-week. Our premium cycle matches exactly — collected each Monday via Razorpay UPI AutoPay, covering the 7 days ahead.
 
 ### Formula
 
@@ -188,26 +203,22 @@ weekly_premium = base_rate × (1 + risk_multiplier) × loyalty_discount × tier_
 
 ### Risk Multiplier — 5 Components
 
-The risk multiplier is a weighted sum of five independently measured risk signals. Each component has its own live data source and peaks at different times of year:
-
 | Component | Weight | Peak Season | Data Source |
 |-----------|--------|-------------|-------------|
 | Weather risk | 40% | Jun–Sep monsoon | OpenWeatherMap 7-day forecast |
 | Pollution risk | 25% | Oct–Nov North India | AQICN daily AQI trend |
 | Zone disruption history | 20% | Varies by city | PostGIS historical IMD event density |
-| Social unrest risk | 10% | Election periods | State election calendar + historical event data |
+| Social unrest risk | 10% | Election periods | State election calendar + historical events |
 | Platform outage risk | 5% | Unpredictable | Rolling 90-day HTTP probe failure rate |
-
-**Why weighted this way:** Weather accounts for 40% because it drives the majority of income disruption events in Indian metros. Pollution is 25% because of the scale of NCR winter AQI crises. Platform outage is only 5% because outages affect all workers simultaneously — a diversifiable risk that can be reserved at low cost.
 
 ### Components Table
 
 | Component | Range | Detail |
 |-----------|-------|--------|
-| Base Rate | ₹25/week | Minimum reserve at a 65% target loss ratio |
-| Risk Multiplier | 0.05 – 1.55 | Weighted sum of 5 signals above |
-| Loyalty Discount | 0.85× – 1.0× | 3% reduction per continuous quarter enrolled — rewards workers who stay |
-| Tier Factor | 1.0× Standard / 1.6× Premium | Standard: max ₹800/event · Premium: max ₹1,200/event |
+| Base Rate | ₹25/week | Minimum reserve at 65% target loss ratio |
+| Risk Multiplier | 0.05 – 1.55 | Weighted sum of 5 signals |
+| Loyalty Discount | 0.85× – 1.0× | 3% off per continuous quarter enrolled |
+| Tier Factor | 1.0× or 1.6× | Standard: max ₹800/event · Premium: max ₹1,200/event |
 
 ### Worked Examples
 
@@ -218,34 +229,43 @@ The risk multiplier is a weighted sum of five independently measured risk signal
 | Chennai, monsoon zone, new | 0.90 | 1.00× | Standard | **~₹47/week** |
 | Chennai, monsoon zone, premium tier | 0.90 | 1.00× | Premium | **~₹76/week** |
 
-At ₹47/week, a Chennai partner pays under **0.8% of weekly income** to protect against losing ₹800–₹1,200 in a single disruption. The math works for the worker.
+At ₹47/week, a Chennai partner pays **under 0.8% of weekly income** to protect against an ₹800–₹1,200 single-disruption loss.
 
-**Phase 2 AI pricing upgrade:** The ML model will price at 500m × 500m zone grid resolution using PostGIS — a worker on elevated ground pays ₹2–3 less than a worker 1 km away in a flood-prone street. The DEVTrails problem statement specifically cites this as an example of good hyper-local ML pricing.
+### Premium Explainability — Workers Understand What They Pay
+
+Using SHAP values from the XGBoost model, every worker sees a plain-language breakdown at policy purchase:
+
+> *"Your weekly premium is ₹47. You pay ₹3 extra because your zone has a high rainfall forecast this week. You save ₹2 because your claim history is clean."*
+
+This transparency reduces abandonment at the payment screen. Workers who understand their pricing renew consistently — it's trust built before a payout ever needs to fire.
+
+**Phase 2 AI upgrade:** 500m × 500m zone grid pricing via PostGIS — a worker on elevated ground pays ₹2–3 less than a worker 1 km away in a flood-prone street.
 
 ---
 
 ## ⚡ Parametric Triggers
 
-Every trigger threshold comes from an official Indian government standard — not our own judgement. This is essential for credibility: if a worker disputes a payout, we can point to the exact IMD or CPCB classification that triggered it.
+Every threshold comes from an official Indian government standard. Every trigger requires **2 independent data sources to agree** before a payout fires. A single API with a bad reading cannot trigger a payout alone.
 
-Every trigger also requires **confirmation from 2 independent data sources** before a payout fires. A single API returning a bad reading cannot trigger a payout. Both sources must agree.
+| # | Disruption | Sources Required | Threshold | Payout |
+|---|-----------|-----------------|-----------|--------|
+| 1 | 🌧️ Heavy Rainfall | OpenWeatherMap + IMD RSS | ≥ 64.5 mm/day — IMD "Heavy Rain" | 4 hrs × hourly rate |
+| 2 | 🌫️ Hazardous AQI | AQICN + CPCB official feed | AQI > 300 — CPCB "Very Poor" | 5 hrs × hourly rate |
+| 3 | 🌡️ Heat Wave | OpenWeatherMap + IMD heat alert | Max temp ≥ 40°C — IMD plains definition | 4 hrs × hourly rate |
+| 4 | 🌊 Flood / Red Warning | IMD RSS + NDMA API | Active IMD Red Warning for zone | 8 hrs × hourly rate |
+| 5 | 🌁 Dense Fog / Zero Visibility | OpenWeatherMap visibility + IMD fog advisory | Visibility < 200m for ≥ 2 hrs | 4 hrs × hourly rate |
+| 6 | 🚗 Severe Traffic Gridlock | TomTom Traffic API + delivery activity drop | Zone avg speed < 8 km/hr for 60+ min (peak hours) | Proportional to hours lost |
+| 7 | 🚫 Curfew / Bandh | NewsAPI + State Govt portal (2 of 3) | Civil disruption confirmed in zone | 8 hrs × hourly rate |
+| 8 | 📵 Platform Outage | HTTP probes from 3 regions | All 3 fail > 2 continuous hours | Per confirmed outage hour |
 
-| # | Disruption | Confirmation Sources | Official Threshold | Payout Hours |
-|---|-----------|---------------------|-------------------|-------------|
-| 1 | 🌧️ Heavy Rainfall | OpenWeatherMap + IMD RSS | ≥ 64.5 mm/day — IMD "Heavy Rain" category | 4 hrs |
-| 2 | 🌫️ Hazardous AQI | AQICN + CPCB official feed | AQI > 300 — CPCB "Very Poor" band | 5 hrs |
-| 3 | 🌡️ Heat Wave | OpenWeatherMap + IMD heat alert | Max temp ≥ 40°C — IMD plains heat wave definition | 4 hrs |
-| 4 | 🌊 Flood / Red Warning | IMD RSS + NDMA API | Active IMD Red Warning for zone | 8 hrs |
-| 5 | 🚫 Curfew / Bandh | NewsAPI + State Govt portal | Civil disruption confirmed by 2 of 3 sources | 8 hrs |
-| 6 | 📵 Platform Outage | HTTP probes from 3 regions | All 3 probes fail > 2 continuous hours | Per hour |
+**Why 8 triggers win:** Most competing platforms stop at 3–5 triggers. We cover the full disruption calendar. Dense fog alone opens the entire North India winter market — Delhi, UP, Punjab — which no other platform addresses specifically. Traffic gridlock adds a new category of income disruption that has nothing to do with weather.
 
-**On the official standards:**
+**Proportional payout for traffic:** Unlike complete work stoppages, severe traffic causes partial income loss. We calculate `hours_of_disruption × (1 - activity_ratio) × hourly_rate` — workers are compensated for what they actually lost, not a flat estimate.
 
-IMD rainfall scale (24-hour): Light 2.5–7.5 mm · Moderate 7.6–35.5 mm · Rather Heavy 35.6–64.4 mm · **Heavy 64.5–124.4 mm ← our trigger** · Very Heavy 124.5–244.4 mm · Extremely Heavy > 244.4 mm.
-
-CPCB AQI scale: Good 0–50 · Satisfactory 51–100 · Moderate 101–200 · Poor 201–300 · **Very Poor 301–400 ← our trigger** · Severe 401–500.
-
-IMD Heat Wave: maximum temperature ≥ 40°C on plains AND ≥ 4.5°C departure from normal. We use the 40°C threshold as the trigger condition.
+**Official standards:**
+- IMD (24hr): Rather Heavy 35.6–64.4 mm · **Heavy ≥ 64.5 mm ← trigger** · Very Heavy ≥ 124.5 mm
+- CPCB: Poor 201–300 · **Very Poor 301–400 ← trigger** · Severe 401–500
+- IMD Heat Wave: max temp ≥ 40°C AND ≥ 4.5°C departure from climatological normal
 
 ---
 
@@ -253,95 +273,131 @@ IMD Heat Wave: maximum temperature ≥ 40°C on plains AND ≥ 4.5°C departure 
 
 ### Premium Calculation — XGBoost + LightGBM Ensemble
 
-We use a stacked ensemble rather than a single model. XGBoost provides strong regularization for stable predictions on sparse zone data; LightGBM's histogram-based leaf-wise tree growth is 3× faster and uses 40% less memory on inference — important when pricing requests must return in under 200ms on our server. The ensemble outperforms either model alone by roughly 12% on AUC-ROC for imbalanced tabular data (a common result in the ML literature for this model pairing).
+We use a stacked ensemble. XGBoost contributes strong regularization for stable predictions on sparse zone data; LightGBM's histogram-based leaf-wise growth is 3× faster and uses 40% less memory — important for < 200ms response targets. The ensemble outperforms either model alone by roughly 12% on AUC-ROC for imbalanced tabular data.
 
-**Inputs (47 features):** Zone disruption frequency over 5 years (IMD/AQICN archives), 7-day rain probability, 7-day AQI forecast, 7-day max temperature, worker's claim history (90 days), declared weekly income, delivery platform, zone PostGIS centroid, month, day of week, local election proximity flag, platform HTTP probe failure rate (rolling 90-day).
+**Inputs (47 features):** Zone disruption frequency over 5 years (IMD/AQICN archives), 7-day rain/AQI/temperature/visibility forecast, traffic congestion history, worker's claim history (90 days), declared weekly income, delivery platform, zone PostGIS centroid, month, election proximity flag, platform probe failure rate.
 
-**Output:** `risk_score` (0.0–1.0) → `weekly_premium` in ₹. Minimum ₹25. Response target: < 200ms.
+**Output:** `risk_score` (0.0–1.0) → `weekly_premium` in ₹, minimum ₹25, in < 200ms.
 
-**Training pipeline:** Phase 1 uses 18 months of synthetic data generated from IMD historical records and AQICN city archives. Phase 2 switches to real payout outcomes as policies are issued — the model retrains weekly.
+**SHAP explainability:** After every premium calculation, SHAP values generate a plain-language one-liner that tells the worker exactly why their number is what it is. No black box pricing.
+
+**Training:** 18 months synthetic IMD-calibrated data. Retrains weekly on real payout outcomes.
 
 ---
 
 ### Predictive Forecasting — LSTM (Phase 2)
 
-A Long Short-Term Memory network trained on 72-hour rolling windows of environmental sensor data. Output: probability of trigger breach in 1hr / 3hr / 6hr windows. Use case: sending workers a heads-up before a disruption fires — *"Rain alert: coverage may activate in 2 hours"* — building trust and habit before a payout even happens.
+Long Short-Term Memory network on 72-hour rolling environmental data. Output: disruption breach probability at 1hr / 3hr / 6hr horizons. Use: warn workers before a trigger fires — *"Heavy rain likely in your zone in 3 hours. Your coverage is watching."* Builds trust before money ever changes hands.
 
 ---
 
-### Fraud Scoring — Isolation Forest (Phase 2 → Supervised in Phase 3)
+### Fraud Scoring — Multi-Layer (Phase 2 rules → Phase 3 ML)
 
-Isolation Forest detects anomalies without labelled training data, which we won't have in Phase 1. It works by isolating data points via random partitioning — fraudulent claims are easier to isolate (fewer splits needed) than genuine ones. Each claim is scored on:
-
-| Feature | Fraud Signal |
-|---------|-------------|
-| Worker's claim rate vs. zone average (30 days) | Unusually high relative to neighbours |
-| Minutes between policy purchase and first claim | Storm-chasers buy policies after forecasts confirm |
-| Cell tower zone vs. claimed GPS zone | Physical location doesn't match claimed zone |
-| Speed between consecutive GPS pings | > 120 km/h in an urban zone = spoofing app |
-| Device ID vs. registered accounts | Same physical device across multiple accounts |
-| Payout vs. declared weekly income | Cannot logically exceed declared earnings |
-| % of zone peers also claiming | < 20% claiming in a zone while one worker does = anomaly |
-
-**Routing:**
 ```
 fraud_score < 0.30     → Auto-approve, payout fires immediately
-fraud_score 0.30–0.65  → Soft flag, payout fires, logged for async review
+fraud_score 0.30–0.65  → Soft flag, payout fires, async review logged
 fraud_score > 0.65     → Hard hold, manual review within 2 hours
 ```
 
-In Phase 3, confirmed fraud cases are used to train a supervised Random Forest classifier — moving from anomaly detection to pattern recognition.
+Phase 2: rule-based scoring with delivery activity cross-validation. Phase 3: Isolation Forest → supervised Random Forest as confirmed fraud cases accumulate.
 
 ---
 
 ## 🔒 Fraud Detection & Anti-Spoofing
 
-### Hard Guardrails (ML Cannot Override)
+### Hard Guardrails — Cannot Be Overridden by the ML Model
 
 | Rule | Detail |
 |------|--------|
-| **Dual-Source Gate** | No payout fires on a single API reading — 2+ independent sources must agree |
-| **Zone Lock** | Registered zone is fixed for 30 days. Changes trigger a 7-day coverage gap |
-| **Event Deduplication** | Each `disruption_event` ID generates exactly one payout per worker per policy period |
-| **Income Cap** | Weekly payout cannot exceed declared weekly income, cross-validated against city average |
+| **Dual-Source Gate** | No payout fires on a single API reading — 2+ independent sources must confirm the disruption |
+| **Zone Lock** | Registered zone fixed for 30 days; changes trigger a 7-day coverage gap |
+| **Event Deduplication** | One payout per worker per `disruption_event` regardless of event duration |
+| **Income Cap** | Weekly payout cannot exceed declared weekly income, validated against city average |
+| **Coordinated Surge Detection** | More than 40 claims arriving within an 8-minute window for a single event triggers an automatic hold. Organic claims trickle in over hours. Fraud rings file in minutes. |
 
-### Why GPS Alone Is Not Enough
+### Layer 1 — Delivery Activity Cross-Validation
 
-A ₹200 spoofing app on any Android device can output any GPS coordinate in seconds. We treat GPS as one signal among several, not a ground truth.
+The most powerful fraud signal is the one a bad actor cannot touch: **what the delivery platform's own backend says about whether the worker was actually offline.**
 
-**What we use instead of GPS as primary location proof:**
+For workers who have connected their Swiggy or Zomato account, when a claim is triggered, we cross-check delivery activity status during the disruption window. If the platform's servers show active order completions during the claimed disruption, the claim is immediately flagged — before GPS checks, before ML models. This is data from the platform's infrastructure, not the worker's device. It cannot be spoofed by a location app.
 
-Android devices continuously log cell tower IDs alongside GPS. These tower IDs reflect which physical tower the device is connected to — they cannot be faked by a software spoofing app because they require radio proximity to the tower. We collect the last 3 tower IDs from the background app session and cross-reference them against the tower coverage map for the claimed disruption zone.
+GPS data can be manipulated by a ₹200 app. Delivery platform activity data cannot be manipulated from a worker's device. The two sources are independent — which is precisely why combining them catches what neither alone can.
 
-**Speed plausibility check (second layer):** We compute the implied speed between consecutive GPS pings. If the result exceeds 120 km/h within an urban delivery zone, the device didn't travel there — it teleported via a spoofing app. This check runs in < 1ms and requires no additional data.
+### Layer 2 — Cell Tower Triangulation + Speed Check
+
+Android logs cell tower IDs continuously alongside GPS. Tower IDs require physical radio proximity — they cannot be faked by a spoofing app. We cross-reference the last 3 session tower IDs against the disruption zone's coverage map.
+
+On top of this: implied speed between consecutive GPS pings. If it exceeds 120 km/hr in an urban zone, the device teleported — it didn't travel. This check runs in < 1ms.
 
 | Signal | Genuine Worker | Spoofer |
 |--------|---------------|---------|
+| Delivery platform shows offline | ✅ Yes | ❌ Usually still delivering |
 | GPS in disruption zone | ✅ Real | ✅ Faked |
-| Cell tower in disruption zone | ✅ Yes | ❌ Actual tower exposed |
+| Cell tower in disruption zone | ✅ Yes | ❌ Real tower exposed |
 | Speed between GPS pings | ✅ Plausible | ❌ Teleport speed |
 | Session in zone 2+ hrs before event | ✅ Consistent | ❌ Sudden appearance |
-| Zone peers also affected | ✅ Yes | ✅ Yes (real event) |
 
-**Detecting coordinated rings:** We build a graph of worker accounts, device fingerprints, and UPI payout destinations. Any device or UPI node connected to more than 2 worker accounts is automatically escalated. Batch registrations from the same IP within 10 minutes of each other trigger a staging flag before any claims are filed.
+### Layer 3 — ML Anomaly Detection (Phase 3)
 
-### UX for Flagged Claims — No Honest Worker Gets Punished
+Isolation Forest on 12 features including platform account tenure, zone delivery consistency, claim frequency vs. peers, device uniqueness, and claim timing patterns. Upgrades to supervised Random Forest as labelled fraud data accumulates.
 
-Bad weather degrades GPS signal and cell tower connectivity — the exact conditions that produce false positives. Our routing was designed specifically around this reality:
+### Layer 4 — Fraud Ring Graph Detection (Phase 3)
 
-**Grace-Pay:** When a claim is flagged only because of a weak network signal — not because of device or behavioural anomalies — the payout fires immediately. An internal async review happens within 24 hours. The worker sees nothing except their money arriving. We pay first, verify after, because the alternative is systematically punishing workers during storms.
+Bipartite graph of worker accounts, device fingerprints, and UPI payout destinations. Any device or UPI node connected to more than 2 worker accounts is auto-escalated — coordinated rings are structurally visible even when individual claims look clean.
 
-**Soft-Hold:** When a cell tower zone mismatch is detected, we send a single prompt: *"We noticed your signal was unclear. Tap to confirm you were working in Zone 4."* One tap, combined with cell tower re-resolution as connectivity recovers, closes over 90% of these cases within 30–45 minutes.
+### UX — No Honest Worker Gets Punished
+
+Bad weather degrades GPS signal and cell tower connectivity — the exact conditions that produce false positives. Our routing separates *technical signal failures* from *behavioural fraud*:
+
+**Grace-Pay:** Flagged only for weak network signal (not device or behavioural anomalies) → payout fires immediately. Internal async review within 24 hours. Worker sees nothing except their money arriving. Pay first, verify after — because the alternative is systematically delaying payouts to workers during the storm that triggered the payout.
+
+**Soft-Hold:** Zone mismatch detected → app prompts: *"Signal was unclear. Tap to confirm you were working in Zone 4."* One tap closes 90%+ of cases within 30–45 minutes.
 
 | What Happened | Worker Sees | Backend Does |
 |--------------|------------|--------------|
-| Clean pass | "₹408 transferred. Stay safe." | Score logged, nothing else |
+| Clean pass | "₹408 transferred. Stay safe." | Score logged |
 | Network signal weak | "₹408 transferred. Stay safe." | Async review queued |
-| Zone signal mismatch | "Confirming your location — payout in ~30 min." | ML rescores with fresh cell data |
-| Anomaly detected | "We're reviewing this — update within 2 hours." | Manual review queue |
-| Confirmed fraud | "Account paused. Please contact support." | Account flagged, policy voided |
+| Zone mismatch | "Confirming your location — payout in ~30 min." | ML rescores with fresh cell data |
+| Anomaly detected | "We're reviewing this — update in 2 hours." | Manual review queue |
+| Confirmed fraud | "Account paused. Contact support." | Flagged, policy voided |
 
-The word "fraud" never appears for the first four categories. Workers who are genuinely affected by the same storm that weakens their GPS never experience a delay.
+The word "fraud" never appears in messages to the first four categories.
+
+---
+
+## 📊 Business Viability
+
+### Unit Economics Per Worker Per Week
+
+| Item | Amount | % of Premium |
+|------|--------|-------------|
+| Premium collected (avg, mid-risk worker) | ₹47 | 100% |
+| Expected payout | ₹28 | ~60% |
+| Fraud buffer | ₹5 | ~10% |
+| Operating costs (API calls, infra, support) | ₹8 | ~17% |
+| **Gross profit per policy** | **~₹6** | **~13%** |
+
+**Payout frequency basis:** A mid-risk worker (Hyderabad) experiences ~10–12 qualifying disruptions per year. Per-trigger payout at ₹102 × 4 hrs = ₹408. Expected weekly payout: ~₹408 × (11/52) ≈ ₹86 for that profile, blended to ₹28 across the full mix of low-risk cities.
+
+**Why the loss ratio holds:** Our dual-source trigger gate prevents false payouts from API glitches — a key driver of loss ratio overrun in other parametric products. Our delivery activity cross-validation reduces fraudulent claims from the industry average of ~25% to an estimated 8–10%, saving roughly ₹5–6 per worker per week in fraud costs. Both mechanisms work together to keep us at or below the 65% target.
+
+### Break-Even Analysis
+
+| Metric | Value |
+|--------|-------|
+| Gross profit per policy/month | ~₹26 (₹6 × 4.3 weeks) |
+| Estimated fixed costs (team + infra) | ~₹8–10 lakh/month |
+| Policies needed to break even | ~35,000–40,000 active policies |
+| Path to break-even | 8–12 months post-launch with a 50,000-rider city pilot |
+
+### Revenue Scaling Path
+
+| Milestone | Active Workers | Monthly Revenue |
+|-----------|---------------|----------------|
+| Phase 2 pilot (1 city) | 1,000 | ~₹2 lakh |
+| 6-month target (3 cities) | 15,000 | ~₹30 lakh |
+| Year 1 (5 cities) | 50,000 | ~₹1 crore |
+| Year 2 (all metros) | 2,00,000 | ~₹4 crore |
 
 ---
 
@@ -351,62 +407,61 @@ The word "fraud" never appears for the first four categories. Workers who are ge
 
 | Layer | Choice | Reason |
 |-------|--------|--------|
-| Frontend | React 18 + Vite 5 | Smallest bundle size, fastest HMR, ideal for PWA |
+| Frontend | React 18 + Vite 5 | Smallest bundle, fastest HMR, ideal for PWA |
 | State | React Context API | Sufficient scope — no Redux overhead |
-| Weather | OpenWeatherMap (free tier) | Live rain, temp, AQI; local mock fallback for offline dev |
-| Font | Noto Sans | Single font covers Latin + Tamil + Telugu + Devanagari |
-| Hosting | Static / CDN | HTML/JS/CSS only in Phase 1 — no server cost |
+| Weather | OpenWeatherMap (free tier) | Live rain, temp, AQI, visibility; local mock fallback |
+| Font | Noto Sans | Latin + Tamil + Telugu + Devanagari from one file |
 
 ### Phase 2 — Being Built
 
 | Layer | Choice | Reason |
 |-------|--------|--------|
-| Backend | **FastAPI (Python)** | Async, native Python ML integration, auto-generated Swagger docs, faster than Node.js/Express for ML-heavy workloads |
-| Database | **PostgreSQL 16 + PostGIS** | ACID compliance for financial records; PostGIS for 500m-grid geospatial zone queries |
-| Cache & Sessions | **Redis 7** | Sub-millisecond session lookups, rate limiting, trigger state caching |
+| Backend | **FastAPI (Python)** | Async, native Python ML integration, auto-Swagger, faster than Node.js/Express for ML-heavy workloads |
+| Database | **PostgreSQL 16 + PostGIS** | ACID compliance for financial records; PostGIS for 500m-grid geospatial queries |
+| Cache | **Redis 7** | Sub-millisecond lookups, rate limiting, trigger state |
 | Event Bus | **Apache Kafka** | Decouples trigger detection from payout pipeline — a slow Razorpay response can't block claim detection |
-| Auth | Twilio SMS OTP | Real OTP delivery — no dependency on Gmail or email access |
-| KYC | UIDAI eKYC sandbox | Aadhaar verification for financial compliance |
-| Payments | Razorpay (test mode) | UPI AutoPay mandate + instant payout API |
-| Notifications | WhatsApp Business API | Workers already have WhatsApp open — higher open rate than push on low-RAM devices |
+| Auth | Twilio SMS OTP | Real OTP — no dependency on email |
+| KYC | UIDAI eKYC sandbox | Aadhaar verification |
+| Payments | Razorpay (test mode) | UPI AutoPay mandate + instant payout |
+| Notifications | WhatsApp Business API | Workers already have it open; higher open rate than push on low-RAM devices |
+| Traffic | TomTom Traffic API | Real-time zone-level speed data for gridlock trigger |
 
 ### Phase 3 — Planned
 
 | Layer | Choice | Reason |
 |-------|--------|--------|
 | ML Premium | XGBoost + LightGBM ensemble | 12% better AUC-ROC, 40% less memory vs single model |
-| ML Forecast | TensorFlow LSTM | 72-hr predictive risk — pre-emptive coverage escalation |
-| ML Fraud | Isolation Forest → Random Forest | Unsupervised Phase 2, supervised Phase 3 with labelled fraud data |
-| Inference | ONNX Runtime | < 50ms serving, language-agnostic, production-grade |
-| Observability | Grafana + Prometheus | Loss ratio dashboards, trigger latency tracking, API health |
-| Logs | ELK Stack | Audit trail required for any regulated financial product |
-| Scale | Kubernetes (GKE) | Auto-scale during monsoon peak when claim volumes spike |
+| ML Forecast | TensorFlow LSTM | 72-hr predictive risk |
+| ML Fraud | Isolation Forest → Random Forest | Unsupervised Phase 2, supervised Phase 3 |
+| Inference | ONNX Runtime | < 50ms serving |
+| Observability | Grafana + Prometheus | Loss ratio dashboards, trigger latency |
+| Logs | ELK Stack | Audit trail for regulated financial product |
+| Scale | Kubernetes (GKE) | Auto-scale during monsoon claim spikes |
 
 ---
 
 ## 🏗️ System Architecture
 
 ```
-┌──────────────────────────────────────────────────────────────────┐
-│                    EXTERNAL DATA SOURCES                         │
-│  OpenWeatherMap · AQICN · IMD RSS · NDMA · NewsAPI · HTTP Probes │
-└──────┬─────────────┬──────────┬─────────┬──────────┬────────────┘
-       │             │          │         │          │
-       └─────────────┴──────────┴─────────┴──────────┘
-                           │ polls every 5 min
+┌──────────────────────────────────────────────────────────────────────┐
+│                     EXTERNAL DATA SOURCES                            │
+│  OWM · AQICN · IMD RSS · NDMA · TomTom · NewsAPI · HTTP Probes      │
+└──────┬─────────────┬──────────┬────────┬──────────┬─────────────────┘
+       └─────────────┴──────────┴────────┴──────────┘
+                           │ polls every 5 min · dual-source gate
                            ▼
-┌──────────────────────────────────────────────────────────────────┐
-│           BACKEND — FastAPI · Python · Async                     │
-│  ┌──────────────────────┐  ┌──────────────────────────────────┐  │
-│  │  REST API  (port 8000)│  │  Trigger Monitor                 │  │
-│  │  /api/v1/            │  │  cron · dual-source gate · Kafka  │  │
-│  └──────────┬───────────┘  └───────────────┬──────────────────┘  │
-└─────────────┼──────────────────────────────┼────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│           BACKEND — FastAPI · Python · Async                         │
+│  ┌──────────────────────┐  ┌────────────────────────────────────┐   │
+│  │  REST API  (port 8000)│  │  Trigger Monitor                   │   │
+│  │  /api/v1/            │  │  cron · 8-trigger engine · Kafka   │   │
+│  └──────────┬───────────┘  └───────────────┬────────────────────┘   │
+└─────────────┼────────────────────────────  ┼───────────────────────┘
               │                              │
    ┌──────────▼─────────┐     ┌─────────────▼──────────────────┐
    │  FRONTEND           │     │  ML SERVICE — FastAPI/Python    │
-   │  React 18 + Vite 5  │     │  XGBoost + LightGBM + IForest  │
-   │  PWA · < 150KB JS   │     │  ONNX Runtime (Phase 3)        │
+   │  React 18 + Vite 5  │     │  XGBoost + LightGBM + SHAP     │
+   │  PWA · < 150KB JS   │     │  IForest + ONNX (Phase 3)      │
    │  port 3000          │     │  port 8001                     │
    └────────────────────┘     └────────────────────────────────┘
               │                              │
@@ -421,65 +476,71 @@ The word "fraud" never appears for the first four categories. Workers who are ge
               └─────────────────────────────┘
 ```
 
-One runtime language (Python) spans both Backend and ML Service — no serialization overhead crossing a language boundary. ML models load once into memory at startup and are called as local function calls, not HTTP requests. This gives < 5ms model inference overhead.
+One Python runtime spans both Backend and ML Service — no serialization overhead. ML models load once at startup and run as local function calls, not HTTP requests. Model inference overhead: < 5ms.
 
 ---
 
 ## 📅 Development Plan
 
 **Phase 1 — Seed (March 4–20) ← Current**
-- [x] Problem research — 2025 EPH data, Zomato/Swiggy partner counts, income loss statistics
-- [x] Persona built around actual device constraints (Redmi A2, 2 GB RAM, Jio 4G)
-- [x] 5 real-world disruption scenarios with accurate ₹102/hr payout calculations
-- [x] IMD/CPCB-calibrated triggers with dual-source confirmation requirement
+- [x] Problem research — 2025 EPH data, partner counts, income loss statistics
+- [x] Persona built around real device constraints (Redmi A2, 2 GB RAM, Jio 4G)
+- [x] 7 real-world disruption scenarios including fog and traffic gridlock
+- [x] 8 IMD/CPCB-calibrated triggers with dual-source confirmation gate
 - [x] 5-component weighted premium formula with loyalty discount and tier structure
-- [x] XGBoost + LightGBM ensemble design with 47-feature input spec
-- [x] Isolation Forest fraud scoring with cell tower + speed plausibility checks
-- [x] Anti-spoofing strategy — Grace-Pay and Soft-Hold UX routing
-- [x] Low-end Android performance constraints documented and designed around
+- [x] SHAP explainability layer for premium transparency
+- [x] XGBoost + LightGBM ensemble with 47-feature input spec
+- [x] Multi-layer fraud detection including delivery activity cross-validation
+- [x] Cell tower triangulation + impossible-speed GPS check
+- [x] Grace-Pay and Soft-Hold UX routing
+- [x] Business viability with unit economics and break-even analysis
+- [x] Low-end Android constraints — battery < 3%/day, data < 40 MB/month
 - [x] FastAPI + PostGIS + Redis + Kafka architecture
 - [x] Figma prototype — 8 screens
-- [ ] 2-minute strategy video — paste link above replacing `[Watch here](#)`
+- [ ] 2-minute strategy video — replace `[Watch here](#)` above
 
 **Phase 2 — Scale (March 21–April 4)**
-- [ ] FastAPI backend scaffold + PostgreSQL 16 + PostGIS schema
+- [ ] FastAPI backend + PostgreSQL 16 + PostGIS schema
 - [ ] Twilio OTP + UIDAI eKYC sandbox — full registration flow
-- [ ] Trigger Monitor — 5-minute cron, dual-source gate, Kafka event publish
-- [ ] XGBoost + LightGBM premium model — synthetic IMD-calibrated training data
-- [ ] Razorpay UPI AutoPay mandate + sandbox payout + WhatsApp notification
-- [ ] React PWA — onboarding, policy purchase, live dashboard (< 150 KB JS target)
+- [ ] 8-trigger Trigger Monitor — 5-minute cron, dual-source gate, Kafka
+- [ ] Delivery activity cross-validation layer (platform API mock)
+- [ ] XGBoost + LightGBM premium model + SHAP explainability
+- [ ] Razorpay UPI AutoPay + sandbox payout + WhatsApp notification
+- [ ] React PWA — onboarding, policy purchase, live dashboard (< 150 KB JS)
 - [ ] 2-minute demo video
 
 **Phase 3 — Soar (April 5–17)**
 - [ ] Isolation Forest fraud model live pre-payout
-- [ ] Cell tower zone validation + impossible-speed GPS check
-- [ ] Graph-based fraud ring detection — device + UPI bipartite graph
-- [ ] LSTM 72-hr predictive risk forecast — pre-emptive coverage alerts
-- [ ] Admin dashboard — loss ratio, disruption heatmap, manual review queue
-- [ ] Worker dashboard — payout history, active coverage, zone live status
-- [ ] Kubernetes auto-scaling for monsoon peak load
+- [ ] Cell tower validation + impossible-speed check
+- [ ] Graph-based fraud ring detection
+- [ ] LSTM 72-hr predictive risk forecast
+- [ ] Live Disruption Zone visualization on worker dashboard
+- [ ] Admin dashboard — loss ratio, heatmap, manual review queue
+- [ ] Worker dashboard — payout history, active coverage, zone status
+- [ ] Kubernetes auto-scaling
 - [ ] Final 5-minute video + pitch deck PDF
 
 ---
 
 ## 💡 What We're Planning Next
 
-Ideas we've identified through worker research and will evaluate between phases:
-
-**Accessibility improvements (Phase 2)**
-WhatsApp as the primary notification channel — no app open required, works on 2G, lower battery drain than push on low-RAM devices. USSD / SMS fallback for workers in Tier 2/3 cities without reliable data plans.
+**Accessibility (Phase 2)**
+WhatsApp as primary notification channel — works on 2G, no background persistence, lower battery. USSD/SMS fallback for Tier 2/3 workers without data plans.
 
 **Smarter pricing (Phase 2)**
-Hyper-local 500m grid pricing via PostGIS — a worker on elevated ground in a historically flood-safe street pays ₹2–3 less than a worker 1 km away in a waterlogged zone. Loyalty discount escalates 3% per continuous quarter enrolled.
+500m grid pricing via PostGIS — a worker on elevated ground pays ₹2–3 less than a worker 1 km away in a waterlogged zone. Loyalty discount compounds 3% per continuous quarter.
+
+**Zone Consensus Trigger (Phase 3)**
+When 5+ workers in the same 2 km radius all go offline simultaneously — detected via delivery activity drops — our system treats this as a disruption signal even before API thresholds are crossed. Anti-collusion: workers must be > 300m apart (verified via cell tower data), must have unique device fingerprints, and must have active delivery history in that zone. This catches hyperlocal events city-level APIs completely miss — a waterlogged lane, a blocked intersection, a surprise rally.
 
 **Compound disruptions (Phase 3)**
-When rain and a bandh happen simultaneously, the current model pays out the higher trigger. We want to design a combined payout formula that reflects the compounded income loss more accurately.
+When rain and a curfew hit simultaneously, the current model pays the higher trigger. A combined formula reflecting compounded income loss is on our backlog.
 
 **Pre-emptive alerts (Phase 2)**
-The LSTM forecast will let us warn workers 3–6 hours before a trigger fires — *"Heavy rain likely this evening. Your coverage is active."* Builds trust before a payout is even needed.
+LSTM warns workers 3–6 hours before a trigger fires — *"Heavy rain likely this evening. Your coverage is active."* Builds trust before a payout is ever needed.
 
 **Savings layer (Phase 4)**
-In months with no claims, a small percentage of the premium is held in a micro-savings reserve that the worker can withdraw after 6 months of continuous enrollment. Turns insurance into a financial tool.
+In periods with no claims, a small percentage of the premium accumulates in a micro-savings reserve the worker can withdraw after 6 months of continuous enrollment.
 
 ---
 
@@ -487,9 +548,9 @@ In months with no claims, a small percentage of the premium is held in a micro-s
 
 | Name | Role | What They Own |
 |------|------|--------------|
-| **Irfan Hussain** | Team Lead & Architect | System design, product strategy, API architecture, ML pipeline design |
-| **Mahesh Sai** | Backend Engineer | FastAPI, PostgreSQL + PostGIS, Razorpay integration, trigger monitor |
-| **Ahamad** | AI/ML Engineer | Premium model (XGBoost + LightGBM), fraud scoring, LSTM forecasting |
+| **Irfan Hussain** | Team Lead & Architect | System design, product strategy, API architecture, ML pipeline |
+| **Mahesh Sai** | Backend Engineer | FastAPI, PostgreSQL + PostGIS, Razorpay, trigger monitor |
+| **Ahamad** | AI/ML Engineer | XGBoost + LightGBM + SHAP, fraud scoring, LSTM forecasting |
 | **Akhil** | Frontend & DevOps | React/Vite PWA, low-end Android performance, Docker, Kubernetes |
 
 ---
