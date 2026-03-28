@@ -162,12 +162,12 @@ Noto Sans renders Tamil, Telugu, Hindi, and Devanagari from a single font file �
 ## ⚙️ Application Workflow
 
 ```
-Onboard → eKYC → Risk Profile → Weekly Policy → Automated Monitoring → Auto Payout
+Onboard → Partner Verification → Risk Profile → Weekly Policy → Automated Monitoring → Auto Payout
 ```
 
 | Step | What Happens |
 |------|-------------|
-| **1. Onboard** | Phone OTP login. Aadhaar eKYC sandbox. Employment verification screenshot. Under 3 minutes. |
+| **1. Onboard** | Phone OTP login. Worker enters their Swiggy or Zomato Partner ID — we verify it directly against the platform's partner database. This confirms they are an active gig worker, extracts their registered delivery zone, and seeds their platform tenure score into the fraud model. Under 2 minutes. |
 | **2. Risk Profile** | XGBoost + LightGBM ensemble scores zone, forecast, and history. Premium returned in < 200ms. Worker sees a plain-language SHAP breakdown of why they pay what they pay. |
 | **3. Buy Policy** | Worker reviews 7-day coverage summary, pays via Razorpay UPI AutoPay. Policy activates immediately. |
 | **4. Monitor** | Trigger Monitor polls 6 external data sources every 5 minutes. Worker does nothing. |
@@ -201,7 +201,15 @@ Gig workers earn week-to-week. Our premium cycle matches exactly — collected e
 weekly_premium = base_rate × (1 + risk_multiplier) × loyalty_discount × tier_factor
 ```
 
-### Risk Multiplier — 5 Components
+### Why Partner ID, Not Aadhaar eKYC
+
+Most platforms default to Aadhaar eKYC because it's the obvious identity layer in India. We deliberately chose not to, for three reasons:
+
+**It proves the right thing.** Aadhaar confirms identity. A Swiggy or Zomato Partner ID confirms the person is an *active gig worker on that platform* — which is precisely what we need. We're not an identity product. We're an income protection product. Verifying employment is more relevant than verifying existence.
+
+**It unlocks richer data.** A Partner ID lookup returns the worker's registered delivery zone, account creation date, and active/inactive status — data we need anyway for the premium model and fraud layer. Aadhaar gives us none of that. One API call does the job of three.
+
+**It's practically achievable.** UIDAI eKYC access for a financial product requires regulatory sandbox approvals that take months. Swiggy and Zomato already expose partner verification endpoints for fleet management tools. In Phase 2 we mock this with a static partner database. In Phase 3 we integrate with real platform APIs or simulate the OAuth flow. The dependency chain is shorter and the data quality is higher.
 
 | Component | Weight | Peak Season | Data Source |
 |-----------|--------|-------------|-------------|
@@ -421,7 +429,7 @@ The word "fraud" never appears in messages to the first four categories.
 | Cache | **Redis 7** | Sub-millisecond lookups, rate limiting, trigger state |
 | Event Bus | **Apache Kafka** | Decouples trigger detection from payout pipeline — a slow Razorpay response can't block claim detection |
 | Auth | Twilio SMS OTP | Real OTP — no dependency on email |
-| KYC | UIDAI eKYC sandbox | Aadhaar verification |
+| Partner Verification | Swiggy / Zomato Partner ID API (mock in Phase 2, real partnership Phase 3) | Proves active worker status, extracts zone + tenure — no UIDAI dependency |
 | Payments | Razorpay (test mode) | UPI AutoPay mandate + instant payout |
 | Notifications | WhatsApp Business API | Workers already have it open; higher open rate than push on low-RAM devices |
 | Traffic | TomTom Traffic API | Real-time zone-level speed data for gridlock trigger |
@@ -501,7 +509,7 @@ One Python runtime spans both Backend and ML Service — no serialization overhe
 
 **Phase 2 — Scale (March 21–April 4)**
 - [ ] FastAPI backend + PostgreSQL 16 + PostGIS schema
-- [ ] Twilio OTP + UIDAI eKYC sandbox — full registration flow
+- [ ] Twilio OTP + Swiggy/Zomato Partner ID verification — full registration flow (mocked in Phase 2)
 - [ ] 8-trigger Trigger Monitor — 5-minute cron, dual-source gate, Kafka
 - [ ] Delivery activity cross-validation layer (platform API mock)
 - [ ] XGBoost + LightGBM premium model + SHAP explainability
