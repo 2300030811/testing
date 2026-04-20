@@ -1,310 +1,321 @@
-# MockMate
+<div align="center">
 
-MockMate is a full-stack interview and career prep platform built with Next.js 14.
-It combines certification practice, AI interview simulation, resume tooling,
-career tracking, and engineering challenge modes in one codebase.
+# MOCKMATE
 
-Live demo: https://mockmate-delta.vercel.app/
+### Master Your Career Path with AI-Powered Intelligence
 
-## Table of Contents
+MockMate is a cutting-edge, AI-driven career optimization platform. It bridges the gap between candidate potential and professional success through immersive simulations, competitive technical combat, and deep deterministic analysis.
 
-- [Tech Icons](#tech-icons)
-- [What Is Implemented](#what-is-implemented)
-- [Current Route Map](#current-route-map)
-- [Architecture](#architecture)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [Scripts](#scripts)
-- [Career Ops Runbook](#career-ops-runbook)
-- [Security and Reliability](#security-and-reliability)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [Team](#team)
-- [License](#license)
+<br/>
 
-## Tech Icons
+[![Live Demo](https://img.shields.io/badge/LIVE_DEMO-mockmate--delta.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://mockmate-delta.vercel.app/)
 
-<p>
-  <img src="https://cdn.simpleicons.org/nextdotjs" alt="Next.js" height="30" />
-  <img src="https://cdn.simpleicons.org/react" alt="React" height="30" />
-  <img src="https://cdn.simpleicons.org/typescript" alt="TypeScript" height="30" />
-  <img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind CSS" height="30" />
-  <img src="https://cdn.simpleicons.org/framer" alt="Framer Motion" height="30" />
-  <img src="https://cdn.simpleicons.org/supabase" alt="Supabase" height="30" />
-  <img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" height="30" />
-  <img src="https://cdn.simpleicons.org/redis" alt="Redis" height="30" />
-  <img src="https://cdn.simpleicons.org/vercel" alt="Vercel" height="30" />
-</p>
+[![Next.js](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+[![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Gemini](https://img.shields.io/badge/Google_Gemini-886FBF?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
+[![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logo=groq&logoColor=white)](https://groq.com/)
 
-<p>
-  <img src="https://cdn.simpleicons.org/google" alt="Google Gemini" height="30" />
-  <img src="https://cdn.simpleicons.org/groq" alt="Groq" height="30" />
-  <img src="https://cdn.simpleicons.org/openai" alt="OpenAI" height="30" />
-  <img src="https://cdn.simpleicons.org/microsoftazure" alt="Azure" height="30" />
-  <img src="https://cdn.simpleicons.org/playwright" alt="Playwright" height="30" />
-  <img src="https://cdn.simpleicons.org/vitest" alt="Vitest" height="30" />
-  <img src="https://cdn.simpleicons.org/nodedotjs" alt="Node.js" height="30" />
-</p>
+</div>
 
-## What Is Implemented
+<br/>
 
-### Certification and Quiz System
+## Why MockMate?
 
-- Certification hub with dedicated tracks for:
-  - AWS
-  - Azure
-  - Salesforce Agentforce
-  - MongoDB
-  - PCAP Python
-  - Oracle
-- Practice and exam mode entry points per certification.
-- Universal quiz runtime for immersive quiz sessions.
-- AI quiz assistant (Bob) integrated across key quiz and home surfaces.
+In a hyper-competitive job market, "good enough" isn't enough. Engineers need precise tools to identify gaps and perfect their delivery. MockMate provides a **deterministic laboratory** for your career growth.
+
+| | |
+|---|---|
+| **Stop Guessing** | Get clear, data-backed feedback on your resume and interview performance. |
+| **Stay Sharp** | Engage in ranked technical battles to keep your skills at the cutting edge. |
+| **Track Everything** | Monitor your application pipeline with integrated ATS health metrics. |
+
+<br/>
+
+---
+
+<br/>
+
+## Flagship Systems
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### ATS Scoring Engine
+
+A custom-built scoring engine that mimics the logic of high-tier enterprise ATS platforms.
+
+- **Weighted Core Analysis** — Intelligent, proprietary weights on critical sections such as Experience, Skills, and Contact information.
+- **Metric Density Detection** — Scans for quantified impact signals (%, $, numbers), rewarding data-driven results.
+- **Adaptive Keyword Matching** — Sophisticated stemming and phrase-matching to land the right keywords.
+
+</td>
+<td width="33%" valign="top">
+
+### The Arena
+
+A high-stakes environment for ranked technical showdowns.
+
+- **Strategic Sectors** — Compete in tracks like AWS Cloud, Azure, MongoDB, and PCAP Python.
+- **Real-Time Matchmaking** — Find opponents, climb global leaderboards, and prove dominance.
+- **Dynamic XP System** — Earn XP for every win and daily challenge completed.
+
+</td>
+<td width="33%" valign="top">
 
 ### AI Interview Simulator
 
-- Interview setup and session flow for behavioral and technical interviews.
-- Voice pipeline using browser speech APIs and Azure Speech fallback/token flow.
-- In-session coding panel and interview analytics summary.
-- Interview session history with persisted session stats.
+An immersive, multi-modal environment simulating the pressure of a real technical interview.
 
-### Competitive and Hands-On Practice
+- **Azure Speech Integration** — High-clarity voice-to-text pipeline for natural conversations.
+- **Deep Technical Probing** — AI-driven questioning that adapts to your responses.
+- **STAR Method Training** — Detects and encourages the Situation, Task, Action, Result structure.
 
-- Arena mode with matchmaking flow, battle loop, and results.
-- Project Mode for multi-file challenge solving.
-- Daily Challenge with language selection and code execution hooks.
-- System Design canvas with node/connection editing, templates, and exports.
+</td>
+</tr>
+</table>
 
-### Resume and Career Toolkit
+<br/>
 
-- Resume Roaster with ATS-oriented feedback and actionable suggestions.
-- ATS Score Optimizer view integrated into the career path workflow.
-- Resume Builder with PDF generation endpoint at `/api/resume/generate`.
-- Career Pathfinder analysis with tracker integration.
+---
 
-### Career Ops and Automation
+<br/>
 
-- Career tracking actions and analytics utilities.
-- Cron endpoints for:
-  - scan
-  - liveness
-  - cadence recomputation
-- Data contract documented in [docs/CAREER_OPS_DATA_CONTRACT.md](docs/CAREER_OPS_DATA_CONTRACT.md).
+## The Full Feature Suite
 
-## Current Route Map
+<details>
+<summary><strong>AI Resume Builder</strong> — Generate professional, ATS-optimized resumes in seconds.</summary>
+<br/>
 
-The app uses Next.js route groups (`(main)`, `(immersive)`, `(admin)`).
-The group names do not appear in URLs.
+- **Dynamic Formatting** — Choose between `Modern Gradient` and `RenderCV Classic` templates.
+- **Export to PDF** — Integrated PDF generation engine for instant downloads.
+- **AI Bullet Points** — Transforms plain task descriptions into high-impact, metric-driven achievements.
+- **Extended Resume Data** — Supports Publications, Languages + Technologies split, and Custom sections.
 
-| Area | Routes |
-| --- | --- |
-| Home and Core | `/`, `/dashboard`, `/settings`, `/about`, `/privacy`, `/terms` |
-| Certification | `/certification`, `/aws-quiz/mode`, `/azure-quiz/mode`, `/salesforce-quiz/mode`, `/mongodb-quiz/mode`, `/pcap-quiz/mode`, `/oracle-quiz/mode`, plus immersive quiz runtime routes |
-| Interview | `/demo`, `/demo/session`, `/demo/history` |
-| Arena and Challenges | `/arena`, `/daily-challenge`, `/project-mode`, `/upload`, `/system-design` |
-| Resume and Career | `/resume-roaster`, `/resume-builder`, `/career-path`, `/career-path/ats-score` |
-| Admin | `/admin`, `/admin/leaderboard` |
-| Utility/Internal | `/migrate`, `/api/health`, `/api/chat`, `/api/resume/generate`, `/api/cron/*` |
+</details>
+
+<details>
+<summary><strong>Resume Roaster</strong> — Brutally honest, AI-driven resume feedback.</summary>
+<br/>
+
+- **Brutal & Honest Tones** — Choose the severity level you're comfortable with.
+- **ATS Analysis Breakdown** — Actionable tips with a breakdown of Clarity, Impact, Technical, and Layout.
+- **Audio Feedback** — Text-to-speech integration to hear your resume roasted aloud.
+- **Tracker Integration** — Save your roast results directly to your Career Ops Tracker.
+
+</details>
+
+<details>
+<summary><strong>Certification Hub</strong> — Master industry-standard certifications.</summary>
+<br/>
+
+- **Specialized Tracks** — Comprehensive training for **AWS**, **Azure**, **Salesforce**, and **MongoDB**.
+- **Exam Simulation** — Practice under real-world time constraints and question formats.
+- **Detailed Explanations** — Deep-dives into every answer for conceptual mastery.
+
+</details>
+
+<details>
+<summary><strong>System Design Canvas</strong> — Architect complex systems visually.</summary>
+<br/>
+
+- **Custom Components** — Drag-and-drop support for Databases, Load Balancers, and API Gateways.
+- **Template Library** — Start with proven architectures for common distributed systems.
+- **Collaboration Ready** — Export your designs to share with peers or include in your portfolio.
+
+</details>
+
+<details>
+<summary><strong>Daily Technical Challenges</strong> — Maintain your coding edge.</summary>
+<br/>
+
+- **Language Support** — Tackle challenges in **Python**, **JavaScript**, **Go**, and **C++**.
+- **In-Browser Execution** — Write, test, and debug code directly in your browser.
+- **XP & Streaks** — Build consistency and climb the daily leaderboard.
+
+</details>
+
+<details>
+<summary><strong>Project Mode</strong> — Analyze and solve multi-file technical challenges.</summary>
+<br/>
+
+- **Context-Aware Analysis** — AI that understands relationships between multiple files in a repository.
+- **Step-by-Step Refactoring** — Guided improvements for complex codebases.
+- **Security Scanning** — Identify potential vulnerabilities in your project structure.
+
+</details>
+
+<br/>
+
+---
+
+<br/>
+
+## Technology Stack
+
+<div align="center">
+<table>
+<tr>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/nextdotjs" alt="Next.js" height="36"/><br/><sub><b>Next.js</b></sub></td>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/react" alt="React" height="36"/><br/><sub><b>React</b></sub></td>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/typescript" alt="TypeScript" height="36"/><br/><sub><b>TypeScript</b></sub></td>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/tailwindcss" alt="Tailwind CSS" height="36"/><br/><sub><b>Tailwind</b></sub></td>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/framer" alt="Framer Motion" height="36"/><br/><sub><b>Framer</b></sub></td>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/supabase" alt="Supabase" height="36"/><br/><sub><b>Supabase</b></sub></td>
+</tr>
+<tr>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" height="36"/><br/><sub><b>PostgreSQL</b></sub></td>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/redis" alt="Redis" height="36"/><br/><sub><b>Redis</b></sub></td>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/google" alt="Google AI" height="36"/><br/><sub><b>Gemini</b></sub></td>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/groq" alt="Groq" height="36"/><br/><sub><b>Groq</b></sub></td>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/microsoftazure" alt="Azure" height="36"/><br/><sub><b>Azure</b></sub></td>
+<td align="center" width="96"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel" height="36"/><br/><sub><b>Vercel</b></sub></td>
+</tr>
+</table>
+</div>
+
+| Layer | Details |
+|---|---|
+| **AI Models** | Hybrid intelligence — **Groq (Llama 3)** for ultra-low latency chat, **Gemini 2.0** for deep analysis fallback. |
+| **Infrastructure** | Vercel deployment with Upstash Redis for global rate-limiting. |
+| **Speech** | Azure Cognitive Services for robust voice interaction. |
+
+<br/>
+
+---
+
+<br/>
 
 ## Architecture
 
-### Frontend and Routing
+We leverage Next.js Route Groups to maintain a clean, high-performance architecture:
 
-- Next.js 14 App Router with grouped layouts:
-  - `app/(main)` for standard site experiences
-  - `app/(immersive)` for full-screen modules
-  - `app/(admin)` for admin console screens
-- TypeScript + React 18 + Tailwind CSS + Framer Motion.
+| Route Group | Purpose |
+|:---|:---|
+| `(main)` | Standard site experiences — Dashboard, Pathing, Results. |
+| `(immersive)` | High-focus environments — Battle, Quiz Runtime, Coding Sandbox. |
+| `(admin)` | Administrative control and leaderboard oversight. |
 
-### Backend Surface
+<br/>
 
-- Server actions in `app/actions/` for domain workflows:
-  auth, quiz, interview, arena, dashboard, resume, career ops, project analysis, and more.
-- API routes in `app/api/` for chat streaming, cron jobs, health checks,
-  PDF generation, and blocked/rate-limited responses.
+```text
+mockmate/
+├── app/                  # Next.js App Router
+│   ├── (main)/           # Primary dashboard & tracker routes
+│   ├── (immersive)/      # Full-screen Battle & Interview modules
+│   ├── actions/          # Domain-specific Server Actions
+│   └── api/              # API Endpoints (OCR, Chat, Cron)
+├── components/           # Atomic Design UI Library
+├── lib/                  # Core Systems (ATS Engine, Services)
+├── types/                # Strict TypeScript Definitions
+└── utils/                # Standardized Math & String Helpers
+```
 
-### AI Providers
+<br/>
 
-- Provider strategy is implemented under `lib/ai/providers/`.
-- Current Bob gateway behavior in `lib/ai/chat-gateway.ts`:
-  - primary stream: Groq (`llama-3.3-70b-versatile`)
-  - fallback stream: Gemini (`gemini-2.0-flash`)
-- OpenAI provider implementation exists and can be used where configured.
+---
 
-### Data and Infra
-
-- Supabase for auth and persistence.
-- Upstash Redis for production API rate limiting and related cache patterns.
-- Azure services for speech, document intelligence, and blob storage integrations.
-
-For a package-level inventory, see [TECH_STACK.md](TECH_STACK.md).
+<br/>
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
-- npm 9+
-- A Supabase project for authenticated and persistent flows
+| Requirement | Version / Notes |
+|:---|:---|
+| **Node.js** | v20.11 or later |
+| **Supabase** | Account & Project (PostgreSQL + Auth) |
+| **AI Keys** | Groq API Key and/or Google AI Studio Key |
 
-### Install and Run
+### Setup
 
+**1. Clone the Source**
 ```bash
 git clone https://github.com/2300030811/mockmate.git
 cd mockmate
+```
+
+**2. Install Dependencies**
+```bash
 npm install
+```
+
+**3. Configure Environment**
+```bash
 cp .env.example .env.local
+```
+
+> [!IMPORTANT]
+> Ensure `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are accurately configured for authentication to work.
+
+**4. Run Migrations**
+
+Apply the SQL files in `lib/db/migrations/` to your Supabase SQL editor to create the necessary tables for applications and scores.
+
+**5. Start Development**
+```bash
 npm run dev
 ```
 
-PowerShell equivalent for env bootstrap:
+<br/>
 
-```powershell
-Copy-Item .env.example .env.local
-```
+<details>
+<summary><strong>Resume PDF Runtime Notes</strong></summary>
+<br/>
 
-Open http://localhost:3000
+| Environment | Details |
+|:---|:---|
+| **Vercel Production** | PDF generation uses `playwright-core` with `@sparticuz/chromium` for serverless compatibility. |
+| **Local Development** | If Chromium is not auto-discovered, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` in `.env.local`. |
+| **Template Selection** | The resume API accepts `templateId` (`base` or `rendercv`) in the JSON payload. |
 
-## Environment Variables
+</details>
 
-Use [.env.example](.env.example) as the source template.
+<br/>
 
-### Commonly Needed for Local Development
+---
 
-- `NEXT_PUBLIC_APP_URL`
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-- `SUPABASE_SERVICE_ROLE_KEY`
-- At least one AI key:
-  - `GOOGLE_API_KEY`
-  - `GROQ_API_KEY`
+<br/>
 
-### Feature-Specific Variables
+## Career Ops Pipeline
 
-- Rate limiting and cache:
-  - `UPSTASH_REDIS_REST_URL`
-  - `UPSTASH_REDIS_REST_TOKEN`
-- Azure integrations:
-  - `AZURE_SPEECH_KEY`
-  - `AZURE_SPEECH_REGION`
-  - `AZURE_DOCUMENT_INTELLIGENCE_ENDPOINT`
-  - `AZURE_DOCUMENT_INTELLIGENCE_KEY`
-  - `AZURE_STORAGE_CONNECTION_STRING`
-- Resume/email/execution extras:
-  - `RESEND_API_KEY`
-  - `FEEDBACK_EMAIL`
-  - `JUDGE0_API_KEY`
-  - `RESUME_PDF_TIMEOUT_MS`
-- Career Ops cron security:
-  - `CRON_SCAN_SECRET`
-  - `CRON_LIVENESS_SECRET`
-  - `CRON_CAREER_OPS_SECRET`
+MockMate includes a background automation layer to maintain application health:
 
-The app is intentionally tolerant of partially configured environments, but
-unconfigured features degrade or disable as expected.
+| Pipeline | Function |
+|:---|:---|
+| **Scan** | Automatically identifies new opportunities. |
+| **Liveness** | Validates system connectivity and AI provider uptime. |
+| **Cadence** | Recalculates user engagement metrics and XP. |
 
-## Scripts
+<br/>
 
-| Script | Purpose |
-| --- | --- |
-| `npm run dev` | Start Next.js dev server |
-| `npm run build` | Production build |
-| `npm run start` | Run production server |
-| `npm run lint` | ESLint checks |
-| `npm run lint:fix` | Auto-fix lint issues where possible |
-| `npm run type-check` | TypeScript `--noEmit` check |
-| `npm run test` | Vitest in default mode |
-| `npm run test:run` | Non-watch test run |
-| `npm run test:watch` | Watch mode tests |
-| `npm run test:coverage` | Coverage report (V8) |
-| `npm run verify:career-ops` | Validate Career Ops env/files/contracts wiring |
-| `npm run doctor:career-ops` | Diagnose Career Ops setup and test coverage expectations |
+---
 
-Coverage thresholds are configured in [vitest.config.mts](vitest.config.mts):
+<br/>
 
-- lines: 70
-- functions: 70
-- statements: 70
-- branches: 55
+## Maintained By
 
-## Career Ops Runbook
+<table>
+<tr>
+<td align="center">
+<a href="https://github.com/2300030811">
+<b>Bhima Mahesh Sai</b>
+</a>
+</td>
+<td align="center">
+<a href="https://github.com/ktejaswanth">
+<b>Kondaveti Tejaswanth</b>
+</a>
+</td>
+</tr>
+</table>
 
-### Canonical Contract
+<br/>
 
-- Read and keep aligned with:
-  [docs/CAREER_OPS_DATA_CONTRACT.md](docs/CAREER_OPS_DATA_CONTRACT.md)
+<div align="center">
 
-### Verification Before Merge
+**MIT License — © 2026 MockMate**
 
-```bash
-npm run verify:career-ops
-npm run doctor:career-ops
-```
-
-### Cron Endpoints
-
-- `/api/cron/scan`
-- `/api/cron/liveness`
-- `/api/cron/cadence`
-
-Auth supports either:
-
-- `Authorization: Bearer <secret>`
-- `x-cron-secret: <secret>`
-
-Required migration files:
-
-- `lib/db/migrations/add_career_ops_tracking.sql`
-- `lib/db/migrations/add_career_ops_pattern_dimensions.sql`
-
-## Security and Reliability
-
-- Middleware updates Supabase session and applies production API rate limiting.
-- Security headers are configured in `next.config.js` (CSP, HSTS, X-Frame-Options,
-  X-Content-Type-Options, Referrer-Policy, Permissions-Policy).
-- Health check endpoint available at `/api/health`.
-- Runtime input validation uses Zod in key API and action surfaces.
-
-## Project Structure
-
-```text
-mockmate/
-|- app/
-|  |- (main)/
-|  |- (immersive)/
-|  |- (admin)/
-|  |- actions/
-|  \- api/
-|- components/
-|- lib/
-|  |- ai/
-|  |- career-ops/
-|  |- services/
-|  \- db/
-|- scripts/
-|- docs/
-|- templates/
-|- types/
-\- utils/
-```
-
-## Contributing
-
-Contributions are welcome.
-
-1. Fork the repository.
-2. Create a feature branch.
-3. Keep changes focused and test-backed.
-4. Run `npm run lint`, `npm run type-check`, and `npm run test:run`.
-5. Open a PR with a clear summary and screenshots/logs when relevant.
-
-## Team
-
-| Name | Role | Links |
-| --- | --- | --- |
-| Bhima Mahesh Sai | Full Stack Developer | [GitHub](https://github.com/2300030811), [LinkedIn](https://www.linkedin.com/in/mahesh-sai-bhima-038243286) |
-| Kondaveti Tejaswanth | Full Stack Developer | [GitHub](https://github.com/ktejaswanth), [LinkedIn](https://www.linkedin.com/in/ktejaswanth/) |
-
-## License
-
-MIT. See [LICENSE](LICENSE).
+</div>
