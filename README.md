@@ -169,8 +169,8 @@ An immersive, multi-modal environment simulating the pressure of a real technica
 <td align="center" width="96"><img src="https://cdn.simpleicons.org/postgresql" alt="PostgreSQL" height="36"/><br/><sub><b>PostgreSQL</b></sub></td>
 <td align="center" width="96"><img src="https://cdn.simpleicons.org/redis" alt="Redis" height="36"/><br/><sub><b>Redis</b></sub></td>
 <td align="center" width="96"><img src="https://cdn.simpleicons.org/google" alt="Google AI" height="36"/><br/><sub><b>Gemini</b></sub></td>
-<td align="center" width="96"><img src="https://cdn.simpleicons.org/groq" alt="Groq" height="36"/><br/><sub><b>Groq</b></sub></td>
-<td align="center" width="96"><img src="https://cdn.simpleicons.org/microsoftazure" alt="Azure" height="36"/><br/><sub><b>Azure</b></sub></td>
+<td align="center" width="96"><img src="https://img.shields.io/badge/-F55036?style=flat-square&logo=groq&logoColor=white" alt="Groq" height="36"/><br/><sub><b>Groq</b></sub></td>
+<td align="center" width="96"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure" height="36"/><br/><sub><b>Azure</b></sub></td>
 <td align="center" width="96"><img src="https://cdn.simpleicons.org/vercel" alt="Vercel" height="36"/><br/><sub><b>Vercel</b></sub></td>
 </tr>
 </table>
