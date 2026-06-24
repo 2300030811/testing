@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ MOCKMATE
+# 🚀 MOCKMATE
 
 ### Master Your Career Path with AI-Powered Intelligence
 
@@ -66,16 +66,24 @@ The ATS Engine simulates high-tier enterprise parsing logic (e.g., Greenhouse, W
 
 ### 2. 🧬 Deep Evaluation (Deep Eval) Engine
 For candidate validation, the Deep Eval service goes beyond static resume text, incorporating public developer history:
-*   **GitHub Sync & Enrichment**: Automatically extracts GitHub usernames, queries the GitHub API, and parses repository complexity.
+*   **GitHub Username Extractor & Heuristics**: Automatically searches the uploaded resume text using RegExp patterns matching `github.com/[username]` or `github: @[username]`, ignoring system-level false positives (e.g., `settings`, `explore`, `pricing`).
+*   **Parallel Fetching & Integration**: Pulls the public profile (name, bio, followers, created date) and top 30 owner repositories in parallel with an 8-second maximum execution timeout, utilizing a `GITHUB_TOKEN` fallback for higher rate limits.
 *   **Open Source vs. Self Projects**: Implements strict classification rules. General repository owners are graded as *Self Projects* unless there is evidence of community engagement (stars/forks/contributors). True open-source contributions involve external repository edits.
 *   **Dynamic Bonuses & Deductions**:
     *   **Bonuses**: Earn +5 for GSoC, +3 for GSSoC, +3 to +5 for founder/co-founder roles, +2 for portfolio sites, and +1 for LinkedIn links.
     *   **Deductions**: Deducts points for simple classroom tutorials (todo-lists, calculators), missing links, broken URLs, or unverified claims.
 *   **Missing Keywords**: Isolates up to 10 critical technical skills missing from the candidate's resume relative to the job requirements.
 
-### 3. 💼 Career Ops CRM Tracker
+### 3. 💼 Career Ops CRM Tracker & Pipelines
 A fully-fledged Customer Relationship Management (CRM) board to track, optimize, and organize the application pipeline:
 *   **Canonical Application Statuses**: Tracks roles via discrete steps: `evaluated`, `applied`, `responded`, `interview`, `offer`, `rejected`, `discarded`, and `skip`.
+*   **Salary Benchmarking Engine & Experience Scaling**: Integrates local dataset lookups (`data/salaries.india.json`) that adjust salary bands automatically based on the candidate's experience years:
+    *   *Fresher/Intern (0-1 yrs)*: Bottom of range.
+    *   *Junior (2-3 yrs)*: Lower-mid range.
+    *   *Mid-level (4-6 yrs)*: Direct median dataset value.
+    *   *Senior (7-10 yrs)*: Upper range.
+    *   *Staff/Principal (11+ yrs)*: Top of range + 25% premium.
+    *   *AI Fallback*: If the target role is missing from the database, the AI orchestrator dynamically generates a calibrated market estimate.
 *   **Dynamic Cadence Offset**: Automatically calculates the next date a user should follow up based on application status and cumulative touchpoints:
     *   *Base Intervals*: `evaluated` (3 days), `applied` (5 days), `responded` (4 days), `interview` (2 days).
     *   *Follow-up Offsets*: 0 followups (+0 days), 1 followup (+1 day), 2 followups (+2 days), $\ge 3$ followups (+4 days).
@@ -88,6 +96,28 @@ A fully-fledged Customer Relationship Management (CRM) board to track, optimize,
     # Run developer repairs on inconsistent tracker entries
     npm run doctor:career-ops
     ```
+
+<br/>
+
+---
+
+## 🤖 Background Automation Pipelines (Cron Services)
+
+MockMate features automated cron handlers to maintain data liveness and pipeline freshness:
+
+### 1. Opportunity API Crawler (`GET /api/cron/scan`)
+*   Periodically scans configured companies (e.g., Cohere, Anthropic via Lever/Greenhouse APIs) in concurrency-throttled chunks.
+*   Applies a double-keyword filter: positive keywords (e.g., `engineer`, `developer`, `machine learning`) to match roles, and negative keywords (e.g., `intern`, `junior`) to filter out irrelevant posts.
+*   Deduplicates results against existing database entries using URL and cryptographic job fingerprint matches.
+
+### 2. Playwright Liveness Checker (`GET /api/cron/liveness`)
+*   Launches headless Chromium instances in the background using Playwright to navigate to saved job posting URLs.
+*   Validates whether opportunities are still open by crawling the DOM, checking text components, and analyzing interactive elements (e.g., presence of "Apply Now", "Apply for this Job" buttons).
+*   Updates statuses in the database to `active`, `uncertain`, or `expired` to prevent users from applying to dead listings.
+
+### 3. Cadence Recalculator (`GET /api/cron/cadence`)
+*   Identifies active users who have tracked applications.
+*   Recalculates follow-up cadence targets based on status changes and new follow-up logs, ensuring the dashboard notifications and active reminders stay correct.
 
 <br/>
 
