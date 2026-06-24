@@ -101,25 +101,30 @@ A fully-fledged Customer Relationship Management (CRM) board to track, optimize,
 
 ---
 
-## 🤖 Background Automation Pipelines (Cron Services)
+## 🧪 Testing & Verification Suite
 
-MockMate features automated cron handlers to maintain data liveness and pipeline freshness:
+MockMate maintains a highly robust testing architecture combining unit and end-to-end integration verifications to ensure platform stability:
 
-### 1. Opportunity API Crawler (`GET /api/cron/scan`)
-*   Periodically scans configured companies (e.g., Cohere, Anthropic via Lever/Greenhouse APIs) in concurrency-throttled chunks.
-*   Applies a double-keyword filter: positive keywords (e.g., `engineer`, `developer`, `machine learning`) to match roles, and negative keywords (e.g., `intern`, `junior`) to filter out irrelevant posts.
-*   Deduplicates results against existing database entries using URL and cryptographic job fingerprint matches.
-
-### 2. Playwright Liveness Checker (`GET /api/cron/liveness`)
-*   Launches headless Chromium instances in the background using Playwright to navigate to saved job posting URLs.
-*   Validates whether opportunities are still open by crawling the DOM, checking text components, and analyzing interactive elements (e.g., presence of "Apply Now", "Apply for this Job" buttons).
-*   Updates statuses in the database to `active`, `uncertain`, or `expired` to prevent users from applying to dead listings.
-
-### 3. Cadence Recalculator (`GET /api/cron/cadence`)
-*   Identifies active users who have tracked applications.
-*   Recalculates follow-up cadence targets based on status changes and new follow-up logs, ensuring the dashboard notifications and active reminders stay correct.
+*   **Unit & Action Testing (Vitest)**: Detailed test suites covering domain-specific Server Actions (ATS evaluations, career roadmaps, quiz templates, resume tailoring, and scoring models) and repository utility helper functions. Run via:
+    ```bash
+    npm run test
+    ```
+*   **End-to-End Browser Automation (Playwright)**: Full browser-level integration tests covering critical user flows:
+    *   `home.spec.ts`: Verified viewport layouts, dynamic interactive states, and theme toggling.
+    *   `quiz-flow.spec.ts`: Complete mock exam lifecycle verification including timing constraints, answer evaluations, and results sync.
+    *   `system-design.spec.ts`: Drag-and-drop canvas checks tracking database and load-balancer component additions.
+    *   `project-mode.spec.ts`: Monaco editor inputs, sandboxed file modifications, terminal run status, and file structural analysis.
+    Run via:
+    ```bash
+    npx playwright test
+    ```
+*   **Coverage Metrics**: Fully-integrated coverage generation utilizing:
+    ```bash
+    npm run test:coverage
+    ```
 
 <br/>
+
 
 ---
 
